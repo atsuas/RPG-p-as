@@ -9,11 +9,11 @@ public class Mover : MonoBehaviour
 
     void Update()
     {
-        // 下記を書く
         if (Input.GetMouseButtonDown(0))
         {
             MoveToCursor();
         }
+        UpdateAnimator();   //実行
     }
 
     private void MoveToCursor()
@@ -25,5 +25,14 @@ public class Mover : MonoBehaviour
         {
             GetComponent<NavMeshAgent>().destination = hit.point;
         }
+    }
+
+    //下記を追加
+    private void UpdateAnimator()
+    {
+        Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float speed = localVelocity.z;
+        GetComponent<Animator>().SetFloat("fowardSpeed", speed);
     }
 }
