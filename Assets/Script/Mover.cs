@@ -7,9 +7,23 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] Transform taget;
 
-    // Update is called once per frame
     void Update()
     {
-        GetComponent<NavMeshAgent>().destination = taget.position;
+        // 下記を書く
+        if (Input.GetMouseButtonDown(0))
+        {
+            MoveToCursor();
+        }
+    }
+
+    private void MoveToCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        bool hasHit = Physics.Raycast(ray, out hit);
+        if (hasHit)
+        {
+            GetComponent<NavMeshAgent>().destination = hit.point;
+        }
     }
 }
