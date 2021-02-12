@@ -9,11 +9,7 @@ public class Mover : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            MoveToCursor();
-        }
-        UpdateAnimator();   //実行
+        UpdateAnimator();
     }
 
     private void MoveToCursor()
@@ -23,11 +19,15 @@ public class Mover : MonoBehaviour
         bool hasHit = Physics.Raycast(ray, out hit);
         if (hasHit)
         {
-            GetComponent<NavMeshAgent>().destination = hit.point;
+            MoveTo(hit.point);
         }
     }
 
-    //下記を追加
+    public void MoveTo(Vector3 destination)
+    {
+        GetComponent<NavMeshAgent>().destination = destination;
+    }
+
     private void UpdateAnimator()
     {
         Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
