@@ -36,13 +36,21 @@ namespace RPG.Combat
             transform.LookAt(target.transform);
             if (timeSinceLastAttack > timeBetweenAttacks)
             {
-                GetComponent<Animator>().SetTrigger("attack");
+                TriggerAttack();    //追加
                 timeSinceLastAttack = 0;
             }
         }
 
+        //追加
+        private void TriggerAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("stopAttack");
+            GetComponent<Animator>().SetTrigger("attack");
+        }
+
         void Hit()
         {
+            if(target == null) { return; }  //追加
             target.TakeDamage(weaponDamage);
         }
 
@@ -51,7 +59,6 @@ namespace RPG.Combat
             return Vector3.Distance(transform.position, target.transform.position) < weaponRange;   //追加
         }
 
-        //追加
         public bool CanAttack(CombatTarget combatTarget)
         {
             if (combatTarget == null) { return false; }
@@ -67,8 +74,15 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            StopAttack();   //追加
             target = null;
+        }
+
+        //追加
+        private void StopAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("attack");
+            GetComponent<Animator>().SetTrigger("stopAttack");
         }
     }
 }
