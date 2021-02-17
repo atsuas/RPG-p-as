@@ -3,29 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
-using RPG.Movement; //追加
+using RPG.Movement;
 
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
+        [SerializeField] float suspicionTime = 3f;  // 追加
 
         Fighter fighter;
         Health health;
-        Mover mover;    //追加
+        Mover mover;
         GameObject player;
 
-        Vector3 guardPosition;  //追加
+        Vector3 guardPosition;
+        float timeSinceLastSawPlayer = Mathf.Infinity;  //追加
 
         private void Start()
         {
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
-            mover = GetComponent<Mover>();  //追加
+            mover = GetComponent<Mover>();
             player = GameObject.FindWithTag("Player");
 
-            guardPosition = transform.position; //追加
+            guardPosition = transform.position;
         }
 
         private void Update()
@@ -34,12 +36,37 @@ namespace RPG.Control
             
             if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
-                fighter.Attack(player);
+                timeSinceLastSawPlayer = 0; //追加
+                AttackBehaviour();
+            }
+            //  追加
+            else if (timeSinceLastSawPlayer < suspicionTime)
+            {
+                //Suspicion state
+                SuspicionBehaviour();
             }
             else
             {
-                mover.StartMoveAction(guardPosition);   //追加
+                GuardBehaviour();
             }
+
+            timeSinceLastSawPlayer += Time.deltaTime;   //追加
+        }
+
+        //追加
+        private void GuardBehaviour()
+        {
+            mover.StartMoveAction(guardPosition);
+        }
+        //追加
+        private void SuspicionBehaviour()
+        {
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+        }
+        //追加
+        private void AttackBehaviour()
+        {
+            fighter.Attack(player);
         }
 
         private bool InAttackRangeOfPlayer()
