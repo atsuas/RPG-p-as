@@ -3,15 +3,14 @@ using System.Collections;
 using RPG.Movement;
 using System;
 using RPG.Combat;
-using RPG.Core; //追加
+using RPG.Core;
 
 namespace RPG.control
 {
     public class PlayerController : MonoBehaviour
     {
-        Health health;  //追加
+        Health health;
 
-        //追加
         private void Start()
         {
             health = GetComponent<Health>();
@@ -19,7 +18,7 @@ namespace RPG.control
 
         private void Update()
         {
-            if (health.IsDead()) return;    //追加
+            if (health.IsDead()) return;
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
             Debug.Log("Nothing to do");

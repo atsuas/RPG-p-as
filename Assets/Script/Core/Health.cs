@@ -10,7 +10,7 @@ namespace RPG.Core
 
         bool isDead = false;
 
-        public bool IsDead()    //追加
+        public bool IsDead()
         {
             return isDead;
         }
@@ -30,7 +30,7 @@ namespace RPG.Core
 
             isDead = true;
             GetComponent<Animator>().SetTrigger("die");
-            GetComponent<ActionScheduler>().CancelCurrentAction();  //追加
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
     }
 }
