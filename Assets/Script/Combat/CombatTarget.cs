@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RPG.Core; //追加
 
 namespace RPG.Combat
 {

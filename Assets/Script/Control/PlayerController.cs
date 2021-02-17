@@ -3,13 +3,23 @@ using System.Collections;
 using RPG.Movement;
 using System;
 using RPG.Combat;
+using RPG.Core; //追加
 
 namespace RPG.control
 {
     public class PlayerController : MonoBehaviour
     {
+        Health health;  //追加
+
+        //追加
+        private void Start()
+        {
+            health = GetComponent<Health>();
+        }
+
         private void Update()
         {
+            if (health.IsDead()) return;    //追加
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
             Debug.Log("Nothing to do");
@@ -21,17 +31,17 @@ namespace RPG.control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;   //追加
+                if (target == null) continue;
 
-                GameObject targetGameObject = target.gameObject;    //追加
-                if (!GetComponent<Fighter>().CanAttack(target.gameObject))  //target.gameObjectにする
+                GameObject targetGameObject = target.gameObject;
+                if (!GetComponent<Fighter>().CanAttack(target.gameObject))
                 {
                     continue;
                 }
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    GetComponent<Fighter>().Attack(target.gameObject);   //target.gameObjectにする
+                    GetComponent<Fighter>().Attack(target.gameObject);
                 }
                 return true;
             }
