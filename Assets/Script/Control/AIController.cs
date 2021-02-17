@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Movement; //追加
 
 namespace RPG.Control
 {
@@ -12,13 +13,19 @@ namespace RPG.Control
 
         Fighter fighter;
         Health health;
+        Mover mover;    //追加
         GameObject player;
+
+        Vector3 guardPosition;  //追加
 
         private void Start()
         {
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
+            mover = GetComponent<Mover>();  //追加
             player = GameObject.FindWithTag("Player");
+
+            guardPosition = transform.position; //追加
         }
 
         private void Update()
@@ -31,7 +38,7 @@ namespace RPG.Control
             }
             else
             {
-                fighter.Cancel();
+                mover.StartMoveAction(guardPosition);   //追加
             }
         }
 
@@ -41,7 +48,6 @@ namespace RPG.Control
             return distanceToPlayer < chaseDistance;
         }
 
-        //Calld by Unity
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;
