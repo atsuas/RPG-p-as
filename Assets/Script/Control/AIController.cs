@@ -4,13 +4,17 @@ using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
+using System;
 
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float suspicionTime = 3f;  // 追加
+        [SerializeField] float suspicionTime = 3f;
+        [SerializeField] PatrolPath patrolPath;
+        [SerializeField] float waypointTolerance = 1f;
+        [SerializeField] float waypointDwellTime = 3f;  //追加
 
         Fighter fighter;
         Health health;
@@ -18,7 +22,9 @@ namespace RPG.Control
         GameObject player;
 
         Vector3 guardPosition;
-        float timeSinceLastSawPlayer = Mathf.Infinity;  //追加
+        float timeSinceLastSawPlayer = Mathf.Infinity;
+        float timeSinceArrivedAtWaypoint = Mathf.Infinity;  //追加
+        int currentWeypointIndex = 0;
 
         private void Start()
         {
@@ -33,39 +39,76 @@ namespace RPG.Control
         private void Update()
         {
             if (health.IsDead()) return;
-            
+
             if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
-                timeSinceLastSawPlayer = 0; //追加
                 AttackBehaviour();
             }
-            //  追加
+
             else if (timeSinceLastSawPlayer < suspicionTime)
             {
-                //Suspicion state
                 SuspicionBehaviour();
             }
             else
             {
-                GuardBehaviour();
+                PatrolBehaviour();
             }
 
-            timeSinceLastSawPlayer += Time.deltaTime;   //追加
+            UpdateTimers(); //追加
         }
 
         //追加
-        private void GuardBehaviour()
+        private void UpdateTimers()
         {
-            mover.StartMoveAction(guardPosition);
+            timeSinceLastSawPlayer += Time.deltaTime;
+            timeSinceArrivedAtWaypoint += Time.deltaTime;
         }
-        //追加
+
+        private void PatrolBehaviour()
+        {
+            Vector3 nextPosition = guardPosition;
+
+            if (patrolPath != null)
+            {
+                if (AtWaypoint())
+                {
+                    timeSinceArrivedAtWaypoint = 0; //追加
+                    CycleWaypoint();
+                }
+                nextPosition = GetCurrentWaypoint();
+            }
+
+            //追加
+            if (timeSinceArrivedAtWaypoint > waypointDwellTime)
+            {
+                mover.StartMoveAction(nextPosition);
+            }
+        }
+       
+        private bool AtWaypoint()
+        {
+            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            return distanceToWaypoint < waypointTolerance;
+        }
+        
+        private void CycleWaypoint()
+        {
+            currentWeypointIndex = patrolPath.GetNextIndex(currentWeypointIndex);
+        }
+        
+        private Vector3 GetCurrentWaypoint()
+        {
+            return patrolPath.GetWaypoint(currentWeypointIndex);
+        }
+
         private void SuspicionBehaviour()
         {
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
-        //追加
+       
         private void AttackBehaviour()
         {
+            timeSinceLastSawPlayer = 0; //移動
             fighter.Attack(player);
         }
 
