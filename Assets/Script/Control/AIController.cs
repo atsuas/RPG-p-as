@@ -12,8 +12,9 @@ namespace RPG.Control
     {
         [SerializeField] float chaseDistance = 5f;
         [SerializeField] float suspicionTime = 3f;
-        [SerializeField] PatrolPath patrolPath; //追加
-        [SerializeField] float waypointTolerance = 1f;  //追加
+        [SerializeField] PatrolPath patrolPath;
+        [SerializeField] float waypointTolerance = 1f;
+        [SerializeField] float waypointDwellTime = 3f;  //追加
 
         Fighter fighter;
         Health health;
@@ -22,7 +23,8 @@ namespace RPG.Control
 
         Vector3 guardPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity;
-        int currentWeypointIndex = 0;   //追加
+        float timeSinceArrivedAtWaypoint = Mathf.Infinity;  //追加
+        int currentWeypointIndex = 0;
 
         private void Start()
         {
@@ -37,25 +39,31 @@ namespace RPG.Control
         private void Update()
         {
             if (health.IsDead()) return;
-            
+
             if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
-                timeSinceLastSawPlayer = 0;
                 AttackBehaviour();
             }
-            
+
             else if (timeSinceLastSawPlayer < suspicionTime)
             {
                 SuspicionBehaviour();
             }
             else
             {
-                PatrolBehaviour();  //変更
+                PatrolBehaviour();
             }
 
-            timeSinceLastSawPlayer += Time.deltaTime;
+            UpdateTimers(); //追加
         }
-        //変更・追加
+
+        //追加
+        private void UpdateTimers()
+        {
+            timeSinceLastSawPlayer += Time.deltaTime;
+            timeSinceArrivedAtWaypoint += Time.deltaTime;
+        }
+
         private void PatrolBehaviour()
         {
             Vector3 nextPosition = guardPosition;
@@ -64,25 +72,30 @@ namespace RPG.Control
             {
                 if (AtWaypoint())
                 {
+                    timeSinceArrivedAtWaypoint = 0; //追加
                     CycleWaypoint();
                 }
                 nextPosition = GetCurrentWaypoint();
             }
 
-            mover.StartMoveAction(nextPosition);
+            //追加
+            if (timeSinceArrivedAtWaypoint > waypointDwellTime)
+            {
+                mover.StartMoveAction(nextPosition);
+            }
         }
-        //追加
+       
         private bool AtWaypoint()
         {
             float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
             return distanceToWaypoint < waypointTolerance;
         }
-        //追加
+        
         private void CycleWaypoint()
         {
             currentWeypointIndex = patrolPath.GetNextIndex(currentWeypointIndex);
         }
-        //追加
+        
         private Vector3 GetCurrentWaypoint()
         {
             return patrolPath.GetWaypoint(currentWeypointIndex);
@@ -95,6 +108,7 @@ namespace RPG.Control
        
         private void AttackBehaviour()
         {
+            timeSinceLastSawPlayer = 0; //移動
             fighter.Attack(player);
         }
 
