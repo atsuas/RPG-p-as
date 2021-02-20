@@ -22,7 +22,7 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                GetComponent<Mover>().MoveTo(target.transform.position);
+                GetComponent<Mover>().MoveTo(target.transform.position, 1f); //1fを追加
             }
             else
             {
@@ -55,7 +55,7 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;   //追加
+            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
         }
 
         public bool CanAttack(GameObject combatTarget)

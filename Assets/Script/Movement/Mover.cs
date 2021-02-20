@@ -8,6 +8,7 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour, IAction 
     {
         [SerializeField] Transform target;
+        [SerializeField] float maxSpeed = 6f; //追加
 
         NavMeshAgent navMeshAgent;
         Health health;
@@ -26,15 +27,16 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)   //speedFractionを追加
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction); //speedFractionを追加
         }
 
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)  //speedFractionを追加
         {
             navMeshAgent.destination = destination;
+            navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);   //追加
             navMeshAgent.isStopped = false;
         }
 
