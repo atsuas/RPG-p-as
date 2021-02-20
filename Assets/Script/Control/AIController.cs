@@ -14,7 +14,9 @@ namespace RPG.Control
         [SerializeField] float suspicionTime = 3f;
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float waypointTolerance = 1f;
-        [SerializeField] float waypointDwellTime = 3f;  //追加
+        [SerializeField] float waypointDwellTime = 3f;
+        [Range(0,1)]    //追加
+        [SerializeField] float patrolSpeedFraction = 0.2f; //追加
 
         Fighter fighter;
         Health health;
@@ -23,7 +25,7 @@ namespace RPG.Control
 
         Vector3 guardPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity;
-        float timeSinceArrivedAtWaypoint = Mathf.Infinity;  //追加
+        float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         int currentWeypointIndex = 0;
 
         private void Start()
@@ -54,10 +56,9 @@ namespace RPG.Control
                 PatrolBehaviour();
             }
 
-            UpdateTimers(); //追加
+            UpdateTimers();
         }
 
-        //追加
         private void UpdateTimers()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
@@ -72,16 +73,15 @@ namespace RPG.Control
             {
                 if (AtWaypoint())
                 {
-                    timeSinceArrivedAtWaypoint = 0; //追加
+                    timeSinceArrivedAtWaypoint = 0;
                     CycleWaypoint();
                 }
                 nextPosition = GetCurrentWaypoint();
             }
 
-            //追加
             if (timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                mover.StartMoveAction(nextPosition);
+                mover.StartMoveAction(nextPosition, patrolSpeedFraction);   //patrolSpeedFractionを追加
             }
         }
        
@@ -108,7 +108,7 @@ namespace RPG.Control
        
         private void AttackBehaviour()
         {
-            timeSinceLastSawPlayer = 0; //移動
+            timeSinceLastSawPlayer = 0;
             fighter.Attack(player);
         }
 
