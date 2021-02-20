@@ -11,7 +11,6 @@ namespace RPG.Cinematics
         {
             GetComponent<PlayableDirector>().played += DisableControl;
             GetComponent<PlayableDirector>().stopped += EnableControl;
-
         }
 
         void DisableControl(PlayableDirector pd)
