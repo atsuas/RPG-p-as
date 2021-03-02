@@ -8,7 +8,7 @@ namespace RPG.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string defaultSaveFile = "Save";
+        const string defaultSaveFile = "save";
 
         void Update()
         {
