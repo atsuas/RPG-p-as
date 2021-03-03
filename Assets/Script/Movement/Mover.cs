@@ -57,18 +57,14 @@ namespace RPG.Movement
 
         public object CaptureState()
         {
-            Dictionary<string, object> data = new Dictionary<string, object>(); //追加
-            data["position"] = new SerializableVector3(transform.position); //追加
-            data["rotation"] = new SerializableVector3(transform.eulerAngles); //追加
-            return data; //追加
+            return new SerializableVector3(transform.position);
         }
 
         public void RestoreState(object state)
         {
-            Dictionary<string, object> data = (Dictionary<string, object>)state; //変更
+            SerializableVector3 position = (SerializableVector3)state;
             GetComponent<NavMeshAgent>().enabled = false;
-            transform.position = ((SerializableVector3)data["position"]).ToVector(); //変更
-            transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector(); //追加
+            transform.position = position.ToVector();
             GetComponent<NavMeshAgent>().enabled = true;
         }
     }
