@@ -10099,7 +10099,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162761883}
-  m_LocalRotation: {x: 0.0054742964, y: 0.8290529, z: -0.008117704, w: 0.5590844}
+  m_LocalRotation: {x: 0.005474282, y: 0.8290529, z: -0.008117683, w: 0.5590844}
   m_LocalPosition: {x: 70.3, y: -1, z: 24.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -14692,25 +14692,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2130657255}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1768915568 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4096238133443730328, guid: 1c2c170285c4042909fca301ca49c51a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1588762385448174481}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1768915569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768915568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uniqueIdentifier: 9686852d-0da3-4404-8df9-e421ebec3428
 --- !u!4 &1769359399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408248, guid: 20980883898f4704f86e6d74b75682ef,
@@ -18252,7 +18233,7 @@ PrefabInstance:
     - target: {fileID: 1588762386153156875, guid: 1c2c170285c4042909fca301ca49c51a,
         type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 0
+      value: -3.5126549e+28
       objectReference: {fileID: 0}
     - target: {fileID: 1588762386153156875, guid: 1c2c170285c4042909fca301ca49c51a,
         type: 3}
@@ -18262,19 +18243,25 @@ PrefabInstance:
     - target: {fileID: 1588762386153156875, guid: 1c2c170285c4042909fca301ca49c51a,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 3.4825707e-17
+      value: -6.91433e+29
       objectReference: {fileID: 0}
     - target: {fileID: 1588762386153156875, guid: 1c2c170285c4042909fca301ca49c51a,
         type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 4.5908e-41
+      value: 4.5907e-41
       objectReference: {fileID: 0}
     - target: {fileID: 4096238133443730334, guid: 1c2c170285c4042909fca301ca49c51a,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7861134057193326122, guid: 1c2c170285c4042909fca301ca49c51a,
+        type: 3}
+      propertyPath: uniqueIdentifier
+      value: 0b39f9df-29f7-4cc8-9244-8d5258748446
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7861134057193326122, guid: 1c2c170285c4042909fca301ca49c51a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1c2c170285c4042909fca301ca49c51a, type: 3}
 --- !u!4 &1991886827466058748
 Transform:
