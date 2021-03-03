@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Saving; //追加
+
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IAction 
+    public class Mover : MonoBehaviour, IAction, ISaveable //ISaveableを追加
     {
         [SerializeField] Transform target;
-        [SerializeField] float maxSpeed = 6f; //追加
+        [SerializeField] float maxSpeed = 6f;
 
         NavMeshAgent navMeshAgent;
         Health health;
@@ -27,16 +29,16 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
-        public void StartMoveAction(Vector3 destination, float speedFraction)   //speedFractionを追加
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            MoveTo(destination, speedFraction); //speedFractionを追加
+            MoveTo(destination, speedFraction);
         }
 
-        public void MoveTo(Vector3 destination, float speedFraction)  //speedFractionを追加
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             navMeshAgent.destination = destination;
-            navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);   //追加
+            navMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             navMeshAgent.isStopped = false;
         }
 
@@ -51,6 +53,20 @@ namespace RPG.Movement
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             float speed = localVelocity.z;
             GetComponent<Animator>().SetFloat("fowardSpeed", speed);
+        }
+
+        //追加
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
+        }
+        //追加
+        public void RestoreState(object state)
+        {
+            SerializableVector3 position = (SerializableVector3)state;
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = position.ToVector();
+            GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 }
