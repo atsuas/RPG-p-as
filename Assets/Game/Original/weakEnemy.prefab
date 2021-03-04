@@ -31,6 +31,7 @@ MonoBehaviour:
   patrolPath: {fileID: 0}
   waypointTolerance: 1
   waypointDwellTime: 3
+  patrolSpeedFraction: 0.2
 --- !u!114 &3196791854749777435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ PrefabInstance:
     - target: {fileID: 863979532912626663, guid: 056020b35f8e84a13b90acff0e9a3bb7,
         type: 3}
       propertyPath: m_Name
-      value: newEnemy
+      value: weakEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 863979532912626663, guid: 056020b35f8e84a13b90acff0e9a3bb7,
         type: 3}
