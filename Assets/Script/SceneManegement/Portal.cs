@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using RPG.Saving; //追加
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -31,6 +32,7 @@ namespace RPG.SceneManagement
                 StartCoroutine(Transition());
             }
         }
+
         private IEnumerator Transition()
         {
             if (sceneToLoad < 0)
@@ -43,14 +45,15 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             Fader fader = FindObjectOfType<Fader>();
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>(); //追加
 
             yield return fader.FadeOut(fadeOutTime);
 
-            
+            savingWrapper.Save(); //追加
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
-           
+            savingWrapper.Load(); //追加
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
@@ -66,10 +69,10 @@ namespace RPG.SceneManagement
         private void UpdatePlayer(Portal otherPortal)
         {
             GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.GetComponent<NavMeshAgent>().enabled = false; //追加
             player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
             player.transform.rotation = otherPortal.spawnPoint.rotation;
-            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<NavMeshAgent>().enabled = true; //追加
         }
         private Portal GetOtherPortal()
         {
