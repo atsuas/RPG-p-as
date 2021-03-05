@@ -11,7 +11,6 @@ namespace RPG.SceneManagement
             canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        //追加
         public void FadeOutImmediate()
         {
             canvasGroup.alpha = 1;
