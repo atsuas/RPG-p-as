@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using RPG.Saving;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -32,7 +31,6 @@ namespace RPG.SceneManagement
                 StartCoroutine(Transition());
             }
         }
-
         private IEnumerator Transition()
         {
             if (sceneToLoad < 0)
@@ -45,20 +43,20 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
 
             Fader fader = FindObjectOfType<Fader>();
-            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
 
             yield return fader.FadeOut(fadeOutTime);
 
-            savingWrapper.Save();
+            SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
+            wrapper.Save();
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
-            savingWrapper.Load();
+            wrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 
-            savingWrapper.Save(); //追加
+            wrapper.Save();
 
             yield return new WaitForSeconds(fadeWaitTime);
             yield return fader.FadeIn(fadeInTime);
