@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Core;
+using UnityEngine;
 
 namespace RPG.Combat
 {
@@ -9,22 +10,40 @@ namespace RPG.Combat
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] float weaponDamage = 5f;
         [SerializeField] float weaponRange = 2f;
-        [SerializeField] bool isRightHanded = true; //追加
+        [SerializeField] bool isRightHanded = true;
+        [SerializeField] Projectile projectile = null;
 
 
-        public void Spawn(Transform rightHand, Transform leftHand, Animator animator) //追加
+        public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
             if (equippedPrefab != null)
             {
-                Transform handTransform; //追加
-                if (isRightHanded) handTransform = rightHand; //追加
-                else handTransform = leftHand; //追加
+                Transform handTransform = GetTransform(rightHand, leftHand);
                 Instantiate(equippedPrefab, handTransform);
             }
             if (animatorOverride != null)
             {
                 animator.runtimeAnimatorController = animatorOverride;
             }
+        }
+
+        private Transform GetTransform(Transform rightHand, Transform leftHand)
+        {
+            Transform handTransform;
+            if (isRightHanded) handTransform = rightHand;
+            else handTransform = leftHand;
+            return handTransform;
+        }
+
+        public bool HasProjectile()
+        {
+            return projectile != null;
+        }
+
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        {
+            Projectile projectileInstance = Instantiate(projectile, GetTransform(rightHand, leftHand).position, Quaternion.identity);
+            projectileInstance.SetTarget(target, weaponDamage); //weaponDamageを追加
         }
 
         public float GetDamage()
