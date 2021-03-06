@@ -6292,6 +6292,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9144146407842549204, guid: 9b4ffadb2d6204db190dcc9c0c1a51c8,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: b387073d0ddbe4c75945e81b2f37baaa,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b4ffadb2d6204db190dcc9c0c1a51c8, type: 3}
 --- !u!4 &639932429 stripped
@@ -14367,6 +14373,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9144146407842549204, guid: 9b4ffadb2d6204db190dcc9c0c1a51c8,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: b387073d0ddbe4c75945e81b2f37baaa,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b4ffadb2d6204db190dcc9c0c1a51c8, type: 3}
 --- !u!4 &1703587960 stripped
@@ -18646,10 +18658,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2959601689984941426, guid: 5db7d7acd3bfd482bb6638206b6fe6c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7968084690352980042, guid: 5db7d7acd3bfd482bb6638206b6fe6c1,
         type: 3}
       propertyPath: m_Name
       value: ArrowProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968084690352980042, guid: 5db7d7acd3bfd482bb6638206b6fe6c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7968084690352980148, guid: 5db7d7acd3bfd482bb6638206b6fe6c1,
         type: 3}
