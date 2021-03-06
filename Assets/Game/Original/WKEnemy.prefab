@@ -2624,7 +2624,7 @@ GameObject:
   - component: {fileID: 7548310335520867167}
   - component: {fileID: 7548310335520867152}
   m_Layer: 0
-  m_Name: weakEnemy (5)
+  m_Name: WKEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2763,13 +2763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d26c998125e84f948565bc88eecf5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 2
   timeBetweenAttacks: 1.21
-  weaponDamage: 5
-  weaponPrefab: {fileID: 3987183767773181879, guid: badbca6d86d234797850b27b434a64c7,
-    type: 3}
-  handTransform: {fileID: 7548310335574184832}
-  weaponOverride: {fileID: 22100000, guid: 2593b71b4b2904cafbe9b03d6e8b5c91, type: 2}
+  rightHandTransform: {fileID: 7548310335574184832}
+  leftHandTransform: {fileID: 7548310335668604207}
+  defaultWeapon: {fileID: 11400000, guid: 501a0184263264426976041ce74352be, type: 2}
 --- !u!114 &7548310335520867165
 MonoBehaviour:
   m_ObjectHideFlags: 0

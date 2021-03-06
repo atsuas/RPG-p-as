@@ -120,6 +120,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b81ba67e44b1b174d9ef4491f146ee35, type: 3}
+--- !u!4 &3992072400655451775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 440002, guid: b81ba67e44b1b174d9ef4491f146ee35,
+    type: 3}
+  m_PrefabInstance: {fileID: 3992072400655298749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3992072400655452751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 441074, guid: b81ba67e44b1b174d9ef4491f146ee35,
@@ -161,6 +167,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 2593b71b4b2904cafbe9b03d6e8b5c91,
         type: 2}
+    - target: {fileID: 1458287040, guid: 056020b35f8e84a13b90acff0e9a3bb7, type: 3}
+      propertyPath: leftHandTransform
+      value: 
+      objectReference: {fileID: 3992072400655451775}
+    - target: {fileID: 1458287040, guid: 056020b35f8e84a13b90acff0e9a3bb7, type: 3}
+      propertyPath: rightHandTransform
+      value: 
+      objectReference: {fileID: 3992072400655452751}
     - target: {fileID: 1458287040, guid: 056020b35f8e84a13b90acff0e9a3bb7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 1

@@ -8,16 +8,17 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] Transform handTransform = null;
-        [SerializeField] Weapon defaultWeapon = null; //変更
+        [SerializeField] Transform rightHandTransform = null; //変更
+        [SerializeField] Transform leftHandTransform = null; //追加
+        [SerializeField] Weapon defaultWeapon = null;
 
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
-        Weapon currentWeapon = null; //追加
+        Weapon currentWeapon = null;
 
         private void Start()
         {
-            EquipWeapon(defaultWeapon); //追加
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -38,11 +39,11 @@ namespace RPG.Combat
             }
         }
 
-        public void EquipWeapon(Weapon weapon) //EquipWeaponに変更
+        public void EquipWeapon(Weapon weapon)
         {
-            currentWeapon = weapon; //追加
+            currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
-            weapon.Spawn(handTransform, animator);
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator); //追加
 
         }
 
@@ -65,12 +66,12 @@ namespace RPG.Combat
         void Hit()
         {
             if(target == null) { return; }
-            target.TakeDamage(currentWeapon.GetDamage()); //currentWeaponに変更
+            target.TakeDamage(currentWeapon.GetDamage());
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange(); //currentWeaponに変更
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange();
         }
 
         public bool CanAttack(GameObject combatTarget)
