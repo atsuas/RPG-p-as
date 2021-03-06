@@ -139,6 +139,11 @@ PrefabInstance:
       propertyPath: handTransform
       value: 
       objectReference: {fileID: 7247626225214217929}
+    - target: {fileID: 1458287040, guid: 056020b35f8e84a13b90acff0e9a3bb7, type: 3}
+      propertyPath: weaponOverride
+      value: 
+      objectReference: {fileID: 22100000, guid: 2593b71b4b2904cafbe9b03d6e8b5c91,
+        type: 2}
     - target: {fileID: 863979532912626657, guid: 056020b35f8e84a13b90acff0e9a3bb7,
         type: 3}
       propertyPath: m_Speed

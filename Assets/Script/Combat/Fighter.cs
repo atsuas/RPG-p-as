@@ -10,13 +10,12 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5f;
-        [SerializeField] GameObject weaponPrefab = null; //追加
-        [SerializeField] Transform handTransform = null; //追加
+        [SerializeField] Transform handTransform = null;
+        [SerializeField] Weapon weapon = null; //追加
 
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
 
-        //追加
         private void Start()
         {
             SpawnWeapon();
@@ -40,10 +39,12 @@ namespace RPG.Combat
             }
         }
 
-        //追加
         private void SpawnWeapon()
         {
-            Instantiate(weaponPrefab, handTransform);
+            if (weapon == null) return; //追加
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(handTransform, animator); //追加
+
         }
 
         private void AttackBehaviour()
